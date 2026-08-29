@@ -1,0 +1,13 @@
+# Venue Profile
+- Venue:
+- Tier/ranking system:
+- Scope fit:
+- Recent-year window:
+- Research clusters:
+- Typical evidence standard:
+- Datasets/metrics:
+- Compute profile:
+- Representative recent papers:
+- Relevance:
+- Evidence status:
+- Source locators:
