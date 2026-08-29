@@ -1,0 +1,16 @@
+profile_id: document-vision-v0.1
+primary_domain: document_vision
+in_scope:
+  - OCR
+  - handwritten_text_recognition
+  - document_image_enhancement
+  - OCR_robustness
+  - OCR_error_correction
+  - confidence_uncertainty
+  - low_resource_OCR
+  - lightweight_document_vision
+adjacent_evidence_only:
+  - scene_text
+  - generic_image_restoration
+  - generic_CV_robustness
+  - multimodal_document_understanding
