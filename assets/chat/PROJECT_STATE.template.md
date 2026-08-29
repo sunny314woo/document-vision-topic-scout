@@ -1,0 +1,17 @@
+# Project State
+- Project ID:
+- Project short name: OCRScout
+- Previous conversation: NONE
+- Current conversation: 01
+- Next conversation: 02
+- Current chat title: 01-领域地图-OCRScout
+- Current phase: Phase 0
+- Current natural migration point: NONE
+- Context risk: LOW
+- Target venue:
+- Venue band:
+- Active focus:
+- Active Q ID: NONE
+- Current coherent task:
+- Last completed checkpoint:
+- Next task:
