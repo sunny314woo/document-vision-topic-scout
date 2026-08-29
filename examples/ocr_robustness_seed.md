@@ -1,0 +1,13 @@
+# Seed Example — OCR Robustness
+- Project short name: OCRScout
+- Conversation: 01
+- Suggested title: `01-领域地图-OCRScout`
+- Research stage: first paper
+- Field: Document Vision
+- Focus seed: OCR Robustness
+- Initial target venue: IJDAR
+- Venue policy: target +1 default; +2 conditional
+- Equipment: none
+- Compute: low
+- Data: public
+- First task: build beginner Field Primer and Venue Map; do not freeze an RQ yet.
