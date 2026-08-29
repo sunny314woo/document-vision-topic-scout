@@ -1,0 +1,21 @@
+# Paper Card
+- paper_id:
+- title:
+- authors:
+- exact version:
+- venue/year:
+- role:
+- cluster:
+- source locator:
+- problem:
+- method:
+- datasets:
+- metrics:
+- baselines:
+- claim-bearing experiments:
+- limitations:
+- failure cases:
+- closest named predecessors:
+- future-work claims:
+- evidence boundary:
+- relevance:
