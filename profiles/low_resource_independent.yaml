@@ -1,0 +1,17 @@
+profile_id: low-resource-independent-v0.1
+research_stage: first_paper
+equipment:
+  dedicated_lab_equipment: false
+data:
+  public_only_preferred: true
+  large_manual_annotation: false
+compute:
+  preferred: cpu_or_consumer_gpu
+  large_gpu_cluster: false
+cost:
+  mandatory_apc_preferred: false
+  mandatory_conference_registration_preferred: false
+  expensive_paid_data_or_api: false
+complexity:
+  research: beginner_to_moderate
+  engineering: moderate_allowed_with_clear_payoff
