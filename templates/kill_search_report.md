@@ -1,0 +1,16 @@
+# Kill Search Report
+- Q ID:
+- Candidate gap:
+- Search date:
+- Synonyms / adjacent terms:
+- Target-tier sources:
+- +1-tier sources:
+- +2 trigger used?:
+- Conference/preprint check:
+- Closest prior work:
+- Strongest invalidating competitor:
+- Already addressed:
+- Appears remaining:
+- Gap status:
+- Search limitations:
+- Next kill action:
