@@ -1,0 +1,25 @@
+# Candidate Topic Card
+- Q ID:
+- Research Question:
+- Why this matters:
+- Current state:
+- Closest prior work:
+- Already solved:
+- Appears unresolved:
+- Gap status:
+- Novelty confidence:
+- Search envelope:
+- Public datasets:
+- Baselines:
+- Metrics:
+- Expected compute:
+- Equipment:
+- Research complexity:
+- Engineering complexity:
+- Target venue fit:
+- +1 potential:
+- Fatal risk:
+- What would kill this topic:
+- Next reading:
+- First decisive test:
+- Verdict: RECOMMEND / HOLD / REJECT
