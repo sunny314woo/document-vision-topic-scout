@@ -18,6 +18,12 @@
 - Context risk:
 - Intended receiving task:
 
+## Source evidence state
+- Outstanding SOURCE REQUESTS:
+- BLOCKED_BY_SOURCE:
+- SOURCE_UNAVAILABLE:
+- Load-bearing papers without FULL_TEXT:
+
 ## Required state
 - PROJECT_STATE.md
 - FIELD_MAP.md
@@ -41,6 +47,8 @@
 - [ ] suggested title uses next sequence
 - [ ] Q ID preserved
 - [ ] natural migration point recorded
+- [ ] source blockers preserved
+- [ ] no load-bearing paper silently upgraded to FULL_TEXT
 - [ ] actual ZIP inventory inspected
 - [ ] all required state present
 - [ ] checksums verified
