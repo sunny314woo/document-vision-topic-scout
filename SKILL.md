@@ -46,6 +46,8 @@ This skill is not a paper-writing skill and does not guarantee novelty, acceptan
 13. **The Skill suggests a title; it never claims to rename the Chat UI.**
 14. **Human topic freeze is mandatory.** The Skill may recommend a question but cannot mark it `FROZEN` until the user explicitly approves it.
 15. **Transfer evidence and provenance, not authority.** A research handoff transfers a defended opportunity, not a guarantee of novelty or publishability.
+16. **Invisible evidence cannot be completed from memory or plausibility.** If a detail is not present in the material actually inspected, do not fill it in.
+17. **Load-bearing literature requires full text.** If the full text of a decisive paper is unavailable, request it from the user and block the dependent judgment.
 
 ## Evidence Vocabulary
 
@@ -67,6 +69,79 @@ Topic verdict:
 - `REJECT`
 
 Never write absolute novelty claims merely because a search returned no direct hit.
+
+## Full-Text Evidence & Source Request Gate
+
+### Evidence access level
+
+Every materially used paper must record one current access level:
+
+- `FULL_TEXT` — the complete primary paper text was actually inspected.
+- `ABSTRACT_ONLY` — only the abstract was actually inspected.
+- `METADATA_ONLY` — only bibliographic metadata/landing-page identity was inspected.
+- `SECONDARY_SOURCE` — only a review, citing paper, index, search result, or other secondary description was inspected.
+
+Access level describes what was actually readable, not what is believed to exist.
+
+### Allowed claims by access level
+
+`METADATA_ONLY` may support only identity-level facts such as title, authors, year, venue, DOI/locator when explicitly visible.
+
+`ABSTRACT_ONLY` may additionally support only claims explicitly stated in the abstract: stated problem, high-level method description, and abstract-level reported conclusion. It does **not** justify filling in dataset names, metric details, baselines, ablations, failure cases, limitations, future work, implementation details, or claim-bearing experiment structure unless the abstract itself explicitly states them.
+
+`SECONDARY_SOURCE` may be used for discovery, navigation, terminology expansion, and locating primary sources. It must not silently substitute for the primary paper when a claim is attributed to that paper.
+
+`FULL_TEXT` permits extraction of method, datasets, metrics, baselines, experiments, ablations, limitations, failure cases, and author-stated future work only to the extent actually present in the inspected text.
+
+### Non-inference rule
+
+Core rule:
+
+> **不可见，不可证；不可证，不补全。**
+
+Never transform:
+- "the available material does not tell us" into "the paper did not do it";
+- "the abstract does not mention X" into "X is absent";
+- a plausible field convention into a claimed paper detail;
+- another paper's description into a primary-source fact without labeling it `SECONDARY_SOURCE`.
+
+Missing fields must remain `UNRESOLVED`, `NOT_VERIFIED_FROM_AVAILABLE_SOURCE`, or equivalent explicit unknown state.
+
+### Load-bearing papers
+
+Full text is mandatory before a paper can carry a decisive judgment when it is used as:
+- an Anchor Paper for deep reading;
+- `CLOSEST_PRIOR`;
+- the strongest `KILL_SEARCH` competitor;
+- key evidence that a gap remains open/closed;
+- key evidence for novelty confidence;
+- a paper whose content changes `RECOMMEND / HOLD / REJECT`.
+
+If such a full text is unavailable, the dependent judgment is `BLOCKED_BY_SOURCE` and must not be completed from abstract, metadata, model memory, or secondary descriptions.
+
+### Source Request
+
+When a load-bearing paper lacks full text, output a structured `SOURCE REQUEST` containing:
+- paper ID;
+- exact title;
+- authors;
+- year / venue;
+- DOI / arXiv / publisher / other locator;
+- current evidence access level;
+- why full text is required;
+- the exact questions that must be checked in the full text;
+- acceptable source forms, e.g. publisher PDF, arXiv PDF, or author manuscript;
+- current source state.
+
+Use source states:
+- `AVAILABLE_FULL_TEXT`
+- `ABSTRACT_ONLY`
+- `METADATA_ONLY`
+- `SOURCE_REQUESTED`
+- `BLOCKED_BY_SOURCE`
+- `SOURCE_UNAVAILABLE`
+
+If full text remains unavailable, preserve the limitation. Gap/novelty remains `UNRESOLVED` or `UNCERTAIN`, and the affected candidate cannot be upgraded to `RECOMMEND`; use `HOLD` when it is otherwise viable.
 
 ## Stable Identities
 
@@ -109,16 +184,21 @@ Output `FIELD_MAP.md` and `VENUE_MAP.md`.
 ### Phase 2 — Anchor Paper Selection
 Read `references/04_literature_mapping_protocol.md` and `references/05_anchor_paper_selection.md`.
 Select a minimal learning set, normally 8–12 papers with explicit roles.
+Record evidence access level before treating an anchor as deeply read.
 
 ### Phase 3 — Targeted Reading and Problem Map
-For each material paper extract research problem, method family, datasets, metrics, baselines, claim-bearing experiments, limitations/failure cases, closest predecessors, and unresolved points.
+For each material paper, extract only what the inspected evidence level permits.
+Do not infer missing datasets, metrics, baselines, experiments, limitations, failure cases, or future work.
+If a load-bearing anchor lacks full text, issue `SOURCE REQUEST` and mark the dependent work `BLOCKED_BY_SOURCE`.
 
 ### Phase 4 — Candidate Gap Formation
 Convert repeated limitations, contradictions, failure modes, benchmark weaknesses, or unresolved comparisons into `HYPOTHESIS`-level candidate gaps.
+Only use limitations/failure modes as paper-derived evidence when the source access level actually supports them.
 
 ### Phase 5 — Kill Search
 Read `references/06_gap_and_kill_search_protocol.md`.
 Search target tier and +1; trigger +2 only under the venue policy; identify closest prior work and strongest invalidating competitor.
+Closest Prior and decisive kill competitors require full text before a decisive gap/novelty judgment.
 
 ### Phase 6 — Personal Feasibility
 Read `references/07_feasibility_gate.md` and load `profiles/low_resource_independent.yaml`.
@@ -126,6 +206,7 @@ Read `references/07_feasibility_gate.md` and load `profiles/low_resource_indepen
 ### Phase 7 — Topic Decision
 Read `references/08_topic_ranking_and_freeze.md`.
 Return at most three candidate cards.
+A candidate blocked on load-bearing full text cannot receive `RECOMMEND`.
 
 ### Phase 8 — Human Topic Freeze
 Only explicit user approval can set `TOPIC_STATUS: FROZEN`.
@@ -173,6 +254,7 @@ The Skill suggests the title; the user renames the Chat manually if desired.
 
 Maintain `PROJECT_STATE.md`, `FIELD_MAP.md`, `VENUE_MAP.md`, `PAPER_INDEX.md`, `RESEARCH_QUESTION_INDEX.md`, `CANDIDATE_GAPS.md`, `KILL_SEARCH_LEDGER.md`, `OPEN_QUESTIONS.md`, `SOURCE_MANIFEST.md`, and `DECISION_LOG.md`.
 Conversation history is lower authority than these files.
+`SOURCE_MANIFEST.md` must record source access level and source state for materially used literature.
 
 ## Web Chat Handoff
 
@@ -185,4 +267,5 @@ If critical state is missing: `HANDOFF BLOCKED`.
 ## Researcher-Facing Style
 
 Speak as a research mentor, not a workflow operator.
-Lead with what the field/literature suggests, why it matters, what remains uncertain, and the next smallest useful action.
+Lead with what the field/literature actually supports, what remains uncertain, and the next smallest useful action.
+When evidence is insufficient, ask for the needed paper instead of completing the record by inference.
